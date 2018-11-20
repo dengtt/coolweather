@@ -1,6 +1,7 @@
 package com.coolweather.android.util;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.coolweather.android.db.City;
 import com.coolweather.android.db.County;
@@ -26,6 +27,8 @@ public class Utility {
                 for(int i = 0; i < allProvince.length();i++){
                     JSONObject provinceObject = allProvince.getJSONObject(i);
                     Province province = new Province();
+                    Log.d("TRF1308","name="+provinceObject.getString("name")+"  ,id=" +
+                            ""+provinceObject.getInt("id"));
                     province.setProvinceName(provinceObject.getString("name"));
                     province.setProvinceCode(provinceObject.getInt("id"));
                     province.save();

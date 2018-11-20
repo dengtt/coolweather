@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -142,7 +143,8 @@ public class ChooseAreaFragment extends Fragment {
             currentLevel = LEVEL_CITY;
         }else{
             int provinceCode = selectedProvince.getProvinceCode();
-            String address = "http://guolin.tech/api/china"+provinceCode;
+            String address = "http://guolin.tech/api/china" + "/" +provinceCode;
+            Log.d("TRF1308","provinceCode="+provinceCode+"  ,address="+address);
             queryFromServer(address,"city");
         }
     }
@@ -150,7 +152,7 @@ public class ChooseAreaFragment extends Fragment {
     private void queryCounties(){
         titleText.setText(selectedCity.getCityName());
         backButton.setVisibility(View.VISIBLE);
-        countyList = DataSupport.where(" cityid = ?",String.valueOf(selectedCity.getId())).find(County.class);
+        countyList = DataSupport.where("cityid = ?",String.valueOf(selectedCity.getId())).find(County.class);
         if(countyList.size() > 0 ){
             dataList.clear();
             for(County county: countyList){
@@ -162,8 +164,8 @@ public class ChooseAreaFragment extends Fragment {
         }else{
             int provinceCode = selectedProvince.getProvinceCode();
             int cityCode = selectedCity.getCityCode();
-            String address = "http://guolin.tech/api/china"+provinceCode+"/"+cityCode;
-            queryFromServer(address,"country");
+            String address = "http://guolin.tech/api/china" + "/" +  provinceCode + "/" + cityCode;
+            queryFromServer(address,"county");
         }
     }
 
@@ -175,10 +177,12 @@ public class ChooseAreaFragment extends Fragment {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String responseText = response.body().string();
+                Log.d("TRF1308","responseText="+responseText);
                 boolean result = false;
                 if ("province".equals(type)){
                     result = Utility.handlePeovinceResponse(responseText);
                 }else if("city".equals(type)){
+//                    Log.d("TRF1308","responseText="+responseText);
                     result = Utility.handleCityResponse(responseText,selectedProvince.getId());
                 }else if("county".equals(type)){
                     result = Utility.handleCountyResponse(responseText,selectedCity.getId());
@@ -219,7 +223,7 @@ public class ChooseAreaFragment extends Fragment {
     private void showProgressDialog(){
         if(progressDialog ==  null){
             progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("正在加载...");
+            progressDialog.setMessage("正在加载......");
             progressDialog.setCanceledOnTouchOutside(false);
         }
         progressDialog.show();
