@@ -1,0 +1,41 @@
+<!--创建碎片便于再布局里引用-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff">
+
+    <!--定义头布局作为标题栏-->
+    <!--布局高度设置actionBar的高度-->
+    <!--背景色设置为colorPrimary-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary">
+        <!--TextView:用于显示标题内容-->
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="#fff"
+            android:textSize="20sp"/>
+        <!--Button:用于执行返回操作-->
+        <!--ic_launcher_background用于作为按钮的背景图-->
+        <Button
+            android:id="@+id/back_button"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/ic_launcher_background"/>
+    </RelativeLayout>
+    <!--ListView:用于显示省市县的数据-->
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
+
+</LinearLayout>
