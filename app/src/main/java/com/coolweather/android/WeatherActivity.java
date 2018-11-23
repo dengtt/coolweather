@@ -1,5 +1,6 @@
 package com.coolweather.android;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -21,8 +22,10 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.coolweather.android.gson.Forecast;
 import com.coolweather.android.gson.Weather;
+import com.coolweather.android.service.AutoUpdateService;
 import com.coolweather.android.util.HttpUtil;
 import com.coolweather.android.util.Utility;
+import com.coolweather.android.service.AutoUpdateService;
 
 import java.io.IOException;
 
@@ -149,6 +152,8 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
         loadBingPic();
+        Intent intent = new Intent(this, AutoUpdateService.class);
+        startService(intent);
     }
 
     //加载必应每日一图
