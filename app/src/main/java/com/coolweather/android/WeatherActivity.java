@@ -1,6 +1,8 @@
 package com.coolweather.android;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -43,6 +45,13 @@ public class WeatherActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(Build.VERSION.SDK_INT >= 21){
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            );
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
         setContentView(R.layout.activity_weather);
         //初始化各控件
         weatherLayout = (ScrollView) findViewById(R.id.weather_layout);
@@ -118,7 +127,7 @@ public class WeatherActivity extends AppCompatActivity {
     //加载必应每日一图
     private void loadBingPic(){
         String requestBingPic = "http://guolin.tech/api/bing_pic";
-        //用HttpUtil.sendOkHttpRequest
+        //用HttpUtil.sendOkHttpRequest取到必应背景图链接
         HttpUtil.sendOkHttpRequest(requestBingPic, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
@@ -139,7 +148,7 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
     }
-    
+
     //处理并展示Weather实体类中的数据
     private void showWeatherInfo(Weather weather){
         String cityName = weather.basic.cityName;
